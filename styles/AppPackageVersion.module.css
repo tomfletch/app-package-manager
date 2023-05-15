@@ -1,0 +1,52 @@
+.header {
+  padding-block: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header > :first-child {
+  flex: 1;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 1rem;
+}
+
+.content h2 {
+  line-height: 1;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.breadcrumbs {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-bottom: 1rem;
+  display: flex;
+}
+
+.breadcrumbs li:not(:last-child):after {
+  content: "\00BB";
+  margin-inline: 0.5rem;
+}
+
+.description {
+  margin-bottom: 3rem;
+}
+
+.sidebar section {
+  margin-bottom: 3rem;
+}
+
+.options {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}

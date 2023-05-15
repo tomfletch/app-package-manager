@@ -1,0 +1,12 @@
+.appPackageLogoName {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  text-decoration: none;
+}
+
+.displayName {
+  font-size: 1.2rem;
+  font-weight: var(--fw-bold);
+  line-height: 1;
+}
