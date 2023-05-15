@@ -4,16 +4,36 @@ import { getAllAppPackages } from '../service/db';
 import { AppPackage } from '../models/appPackage';
 import styles from '../styles/Home.module.css';
 import AppPackageLogoName from '../components/AppPackageLogoName/AppPackageLogoName';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 
 type HomeProps = {
   appPackages: AppPackage[];
 };
 
 export default function Home({ appPackages }: HomeProps) {
+  const [search, setSearch] = useState('');
+
+  const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  }
+
+  let filteredAppPackages = appPackages;
+
+  if (search) {
+    filteredAppPackages = appPackages.filter((appPackage) => appPackage.name.toLowerCase().includes(search.toLowerCase()));
+  }
+
   return (
     <div className="container">
-      <header>
+      <header className={styles.header}>
         <h1>App Packages</h1>
+        <div className={styles.headerOptions}>
+          <div className={styles.searchContainer}>
+            <label htmlFor="search">Search</label>
+            <input id="search" type="text" value={search} onChange={onSearchChange} />
+          </div>
+          <Link href="/add-package">Add Package</Link>
+        </div>
       </header>
       <table className={styles.appPackagesTable}>
         <thead>
@@ -26,7 +46,7 @@ export default function Home({ appPackages }: HomeProps) {
           </tr>
         </thead>
         <tbody>
-          {appPackages.map((appPackage) => (
+          {filteredAppPackages.map((appPackage) => (
             <tr key={`${appPackage.packageName}-${appPackage.version}`}>
               <td>
                 <Link href={`/apps/${encodeURIComponent(appPackage.packageName)}/${encodeURIComponent(appPackage.version)}`}>
