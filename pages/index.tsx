@@ -10,6 +10,11 @@ type HomeProps = {
   appPackages: AppPackage[];
 };
 
+function isSearchMatch(appPackage: AppPackage, searchTerm: string) {
+  const searchable = `${appPackage.name} ${appPackage.packageName} ${appPackage.version}`;
+  return searchable.toLowerCase().includes(searchTerm);
+}
+
 export default function Home({ appPackages }: HomeProps) {
   const [search, setSearch] = useState('');
 
@@ -20,7 +25,8 @@ export default function Home({ appPackages }: HomeProps) {
   let filteredAppPackages = appPackages;
 
   if (search) {
-    filteredAppPackages = appPackages.filter((appPackage) => appPackage.name.toLowerCase().includes(search.toLowerCase()));
+    const searchLower = search.toLowerCase();
+    filteredAppPackages = appPackages.filter((appPackage) => isSearchMatch(appPackage, searchLower));
   }
 
   return (
