@@ -1,5 +1,25 @@
+.headerContainer {
+  background-color: hsl(216, 15%, 94%);
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+}
+
 .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.header h1 {
+  font-weight: 300;
+  font-size: 1.5rem;
+}
+
+.header h1 a {
+  color: var(--clr-text);
+  text-decoration: none;
+}
+
+.header h1 a:hover {
+  color: var(--clr-primary);
 }

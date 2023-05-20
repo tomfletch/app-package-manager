@@ -10,8 +10,8 @@ type PageLayoutProps = {
 export default function PageLayout({ children }: PageLayoutProps) {
   return (
     <>
-      <div className="container">
-        <header className={styles.header}>
+      <div className={styles.headerContainer}>
+        <header className={`container ${styles.header}`}>
           <h1><Link href="/">App Package Manager</Link></h1>
           <LoginBtn />
         </header>
