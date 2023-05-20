@@ -1,0 +1,10 @@
+.appPackageLink {
+  display: inline-block;
+  color: var(--clr-text);
+  text-decoration: none;
+}
+
+.appPackageLink:hover, .appPackageLink:focus-visible {
+  outline: none;
+  color: var(--clr-primary);
+}

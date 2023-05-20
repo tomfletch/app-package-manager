@@ -6,6 +6,7 @@ import AppPackageLogoName from '../AppPackageLogoName/AppPackageLogoName';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import useUser from '../../hooks/useUser';
+import styles from './AppPackageRow.module.css';
 
 type AppPackageRowProps = {
   appPackage: IAppPackage,
@@ -41,7 +42,7 @@ export default function AppPackageRow({ appPackage, onDelete }: AppPackageRowPro
   return (
     <tr key={`${appPackage.packageName}-${appPackage.version}`}>
       <td>
-        <Link href={`/apps/${encodeURIComponent(appPackage.packageName)}/${encodeURIComponent(appPackage.version)}`}>
+        <Link className={styles.appPackageLink} href={`/apps/${encodeURIComponent(appPackage.packageName)}/${encodeURIComponent(appPackage.version)}`}>
           <AppPackageLogoName appPackage={appPackage} />
         </Link>
       </td>

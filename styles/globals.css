@@ -1,13 +1,20 @@
 :root {
-  --clr-draft: blue;
-  --clr-submitted: orange;
-  --clr-released: green;
-  --clr-error: #dc3545;
+  --clr-text: hsl(0, 0%, 20%);
+  --clr-primary: hsl(217, 97%, 59%);
+
+  --clr-draft: hsl(240, 100%, 50%);
+  --clr-submitted: hsl(39, 100%, 50%);
+  --clr-released: hsl(120, 100%, 25%);
+  --clr-error: hsl(354, 70%, 54%);
 
   --fw-regular: 400;
   --fw-bold: 700;
 
   --br-regular: 0.5rem;
+}
+
+body {
+  color: var(--clr-text);
 }
 
 .container {
