@@ -1,22 +1,27 @@
 import { GetServerSideProps } from 'next';
 import Link from 'next/link';
-import { getAllAppPackages } from '../service/db';
-import { AppPackage } from '../models/appPackage';
 import styles from '../styles/Home.module.css';
-import AppPackageLogoName from '../components/AppPackageLogoName/AppPackageLogoName';
-import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { useState } from 'react';
+import { IAppPackage } from '../models/AppPackage';
+import AppPackageRow from '../components/AppPackageRow/AppPackageRow';
+import { getAllAppPackages } from '../lib/appPackages';
+import useUser from '../hooks/useUser';
+import { InputAdornment, TextField } from '@mui/material';
+import { Search } from '@mui/icons-material';
 
-type HomeProps = {
-  appPackages: AppPackage[];
-};
-
-function isSearchMatch(appPackage: AppPackage, searchTerm: string) {
+function isSearchMatch(appPackage: IAppPackage, searchTerm: string) {
   const searchable = `${appPackage.name} ${appPackage.packageName} ${appPackage.version}`;
   return searchable.toLowerCase().includes(searchTerm);
 }
 
-export default function Home({ appPackages }: HomeProps) {
+type HomeProps = {
+  initialAppPackages: IAppPackage[];
+};
+
+export default function Home({ initialAppPackages }: HomeProps) {
+  const { isLoggedIn } = useUser();
   const [search, setSearch] = useState('');
+  const [appPackages, setAppPackages] = useState(initialAppPackages);
 
   const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -29,16 +34,29 @@ export default function Home({ appPackages }: HomeProps) {
     filteredAppPackages = appPackages.filter((appPackage) => isSearchMatch(appPackage, searchLower));
   }
 
+  const onDeleteAppPackage = (appPackageId: string) => {
+    setAppPackages((prevAppPackages) => prevAppPackages.filter((appPackage) => appPackage._id !== appPackageId));
+  }
+
   return (
     <div className="container">
       <header className={styles.header}>
         <h1>App Packages</h1>
         <div className={styles.headerOptions}>
           <div className={styles.searchContainer}>
-            <label htmlFor="search">Search</label>
-            <input id="search" type="text" value={search} onChange={onSearchChange} />
+            <TextField
+              InputProps={{
+                startAdornment: <InputAdornment position="start"><Search /></InputAdornment>,
+              }}
+              size="small"
+              variant="outlined"
+              value={search}
+              onChange={onSearchChange}
+            />
           </div>
-          <Link href="/add-package">Add Package</Link>
+          {isLoggedIn && (
+            <Link href="/add-package">Add Package</Link>
+          )}
         </div>
       </header>
       <table className={styles.appPackagesTable}>
@@ -53,27 +71,11 @@ export default function Home({ appPackages }: HomeProps) {
         </thead>
         <tbody>
           {filteredAppPackages.map((appPackage) => (
-            <tr key={`${appPackage.packageName}-${appPackage.version}`}>
-              <td>
-                <Link href={`/apps/${encodeURIComponent(appPackage.packageName)}/${encodeURIComponent(appPackage.version)}`}>
-                  <AppPackageLogoName appPackage={appPackage} />
-                </Link>
-              </td>
-              <td>
-                {appPackage.version}
-              </td>
-              <td>
-                {appPackage.notes.length || '-'}
-              </td>
-              <td>
-                <div className={`status status-${appPackage.status.toLowerCase()}`}>
-                  {appPackage.status}
-                </div>
-              </td>
-              <td>
-                Actions
-              </td>
-            </tr>
+            <AppPackageRow
+              key={appPackage._id}
+              appPackage={appPackage}
+              onDelete={() => onDeleteAppPackage(appPackage._id)}
+            />
           ))}
         </tbody>
       </table>
@@ -82,9 +84,9 @@ export default function Home({ appPackages }: HomeProps) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const appPackages = getAllAppPackages();
+  const initialAppPackages = await getAllAppPackages();
 
   return {
-    props: { appPackages }
+    props: { initialAppPackages }
   }
 };

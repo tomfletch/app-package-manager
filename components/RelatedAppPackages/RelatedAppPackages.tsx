@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { AppPackage } from '../../models/appPackage';
+import { IAppPackage } from '../../models/AppPackage';
 import styles from './RelatedAppPackages.module.css';
 
 type RelatedAppPackagesProps = {
-  relatedAppPackages: AppPackage[];
+  relatedAppPackages: IAppPackage[];
 }
 
 export default function RelatedAppPackages({ relatedAppPackages }: RelatedAppPackagesProps) {
@@ -20,7 +20,7 @@ export default function RelatedAppPackages({ relatedAppPackages }: RelatedAppPac
               >
                 {appPackage.version}
               </Link>
-              <div className={`status status-${appPackage.status.toLowerCase()}`}>
+              <div className={`status status-label status-${appPackage.status.toLowerCase()}`}>
                 {appPackage.status}
               </div>
             </li>

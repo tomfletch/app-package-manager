@@ -1,0 +1,16 @@
+.field {
+  margin-bottom: 1rem;
+}
+
+.field label {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.field input, .field textarea {
+  width: 500px;
+}
+
+.field textarea {
+  height: 200px;
+}
