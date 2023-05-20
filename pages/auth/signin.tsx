@@ -2,18 +2,23 @@ import type { GetServerSidePropsContext, InferGetServerSidePropsType } from "nex
 import { getProviders, signIn } from "next-auth/react"
 import { getServerSession } from "next-auth/next"
 import { authOptions } from "../api/auth/[...nextauth]";
+import { Button } from '@mui/material';
 
 export default function SignIn({ providers }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
-    <>
+    <div className="container">
+      <header>
+        <h1>Sign in</h1>
+      </header>
+      <p>You must sign in to manage app packages and create notes</p>
       {Object.values(providers).map((provider) => (
         <div key={provider.name}>
-          <button onClick={() => signIn(provider.id)}>
+          <Button onClick={() => signIn(provider.id)} variant="outlined">
             Sign in with {provider.name}
-          </button>
+          </Button>
         </div>
       ))}
-    </>
+    </div>
   )
 }
 

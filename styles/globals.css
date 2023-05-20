@@ -20,6 +20,10 @@
   padding-block: 1rem;
 }
 
+p {
+  margin-bottom: 1rem;
+}
+
 table {
   width: 100%;
 }
