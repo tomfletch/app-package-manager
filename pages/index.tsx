@@ -55,7 +55,7 @@ export default function Home({ initialAppPackages }: HomeProps) {
             />
           </div>
           {isLoggedIn && (
-            <Link href="/add-package">Add Package</Link>
+            <Link href="/apps/add">Add Package</Link>
           )}
         </div>
       </header>

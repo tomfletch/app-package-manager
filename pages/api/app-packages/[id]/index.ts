@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { deleteAppPackage, updateAppPackageStatus } from '../../../../lib/appPackages';
+import { deleteAppPackage, updateAppPackage } from '../../../../lib/appPackages';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const {
     query: { id },
-    body: { status },
+    body,
     method,
   } = req;
 
@@ -17,7 +17,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   } else if (method === 'PATCH') {
     try {
-      await updateAppPackageStatus(id as string, status as string);
+      await updateAppPackage(id as string, body);
       res.status(204).end();
     } catch (error) {
       res.status(500).json({ success: false });

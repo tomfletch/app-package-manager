@@ -1,0 +1,7 @@
+.field {
+  margin-bottom: 2rem;
+}
+
+.field input, .field textarea {
+  width: 500px;
+}

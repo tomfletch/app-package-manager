@@ -19,6 +19,8 @@ export interface INewAppPackage {
   status: string;
 };
 
+export type IAppPackageUpdate = Partial<INewAppPackage>;
+
 const appPackageSchema = new mongoose.Schema({
   name: {
     type: String,

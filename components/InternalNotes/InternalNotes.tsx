@@ -21,7 +21,7 @@ export default function InternalNotes({ appPackageId, notes: initialNotes }: Int
     setIsAdding(true);
     const newNote = { body: newNoteBody };
 
-    const response = await fetch(`/api/app-package/${appPackageId}/notes`, {
+    const response = await fetch(`/api/app-packages/${appPackageId}/notes`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

@@ -34,10 +34,20 @@ table {
   padding: 0.25rem 1rem;
 }
 
-.status-draft { border-color: var(--clr-draft); }
-.status-submitted { border-color: var(--clr-submitted); }
-.status-released { border-color: var(--clr-released); }
+.status-draft,
+.MuiInputBase-root.select-status-draft .MuiOutlinedInput-notchedOutline {
+  border-color: var(--clr-draft);
+}
 
+.status-submitted,
+.MuiInputBase-root.select-status-submitted .MuiOutlinedInput-notchedOutline {
+  border-color: var(--clr-submitted);
+}
+
+.status-released,
+.MuiInputBase-root.select-status-released .MuiOutlinedInput-notchedOutline {
+  border-color: var(--clr-released);
+}
 
 input, textarea, select {
   padding: 0.25rem 0.5rem;

@@ -1,5 +1,5 @@
 import dbConnect from './dbConnect';
-import AppPackage, { IAppPackage, INewAppPackage } from '../models/AppPackage';
+import AppPackage, { IAppPackage, IAppPackageUpdate, INewAppPackage } from '../models/AppPackage';
 import { serializable } from './util';
 
 export async function getAllAppPackages(): Promise<IAppPackage[]> {
@@ -25,9 +25,9 @@ export async function deleteAppPackage(id: string): Promise<void> {
   await AppPackage.findByIdAndDelete(id);
 }
 
-export async function updateAppPackageStatus(id: string, status: string): Promise<IAppPackage> {
+export async function updateAppPackage(id: string, appPackageUpdate: IAppPackageUpdate): Promise<IAppPackage> {
   await dbConnect();
-  const result = await AppPackage.findByIdAndUpdate(id, { status });
+  const result = await AppPackage.findByIdAndUpdate(id, appPackageUpdate);
   return serializable(result);
 }
 

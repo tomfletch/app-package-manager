@@ -1,29 +1,28 @@
 import { GetServerSideProps } from 'next';
-import styles from '../../../styles/AppPackageVersion.module.css';
 
-import InternalNotes from '../../../components/InternalNotes/InternalNotes';
-import AppPackageLogoName from '../../../components/AppPackageLogoName/AppPackageLogoName';
+import InternalNotes from '../../../../components/InternalNotes/InternalNotes';
+import AppPackageLogoName from '../../../../components/AppPackageLogoName/AppPackageLogoName';
 import Link from 'next/link';
-import RelatedAppPackages from '../../../components/RelatedAppPackages/RelatedAppPackages';
-import { IAppPackage } from '../../../models/AppPackage';
-import { getAppPackage, getRelatedAppPackages } from '../../../lib/appPackages';
-import { markdownToHTML } from '../../../lib/markdown';
+import RelatedAppPackages from '../../../../components/RelatedAppPackages/RelatedAppPackages';
+import { IAppPackage } from '../../../../models/AppPackage';
+import { getAppPackage, getRelatedAppPackages } from '../../../../lib/appPackages';
+import { markdownToHTML } from '../../../../lib/markdown';
 import { Button, Menu, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useState } from 'react';
 import { KeyboardArrowDown, Edit, Delete } from '@mui/icons-material';
 import { useRouter } from 'next/router';
-import { INote } from '../../../models/Note';
-import useUser from '../../../hooks/useUser';
+import { INote } from '../../../../models/Note';
+import useUser from '../../../../hooks/useUser';
+import styles from '../../../../styles/AppPackageVersion.module.css';
 
 
 type AppPackageVersionProps = {
   appPackage: IAppPackage;
   descriptionHTML: string;
   relatedAppPackages: IAppPackage[];
-  notes: INote[];
 };
 
-export default function AppPackageVersion({ appPackage, descriptionHTML, relatedAppPackages, notes }: AppPackageVersionProps) {
+export default function AppPackageVersion({ appPackage, descriptionHTML, relatedAppPackages }: AppPackageVersionProps) {
   const router = useRouter();
   const { isLoggedIn } = useUser();
 
@@ -42,14 +41,14 @@ export default function AppPackageVersion({ appPackage, descriptionHTML, related
 
   const onDeleteClick = async () => {
     setAnchorEl(null);
-    await fetch(`/api/app-package/${appPackage._id}`, { method: 'DELETE' });
+    await fetch(`/api/app-packages/${appPackage._id}`, { method: 'DELETE' });
     router.push('/');
   }
 
 
   const onStatusChange = (e: SelectChangeEvent<string>) => {
     setStatus(e.target.value);
-    fetch(`/api/app-package/${appPackage._id}`, {
+    fetch(`/api/app-packages/${appPackage._id}`, {
       method: 'PATCH',
       body: JSON.stringify({ status: e.target.value}),
       headers: {
@@ -67,7 +66,7 @@ export default function AppPackageVersion({ appPackage, descriptionHTML, related
             <Select
               value={status}
               onChange={onStatusChange}
-              className={`status status-${status.toLowerCase()}`}
+              className={`select-status-${status.toLowerCase()}`}
               size="small"
             >
               <MenuItem value="Draft">Draft</MenuItem>
@@ -105,7 +104,11 @@ export default function AppPackageVersion({ appPackage, descriptionHTML, related
               open={isActionsOpen}
               onClose={onCloseActions}
             >
-              <MenuItem onClick={onCloseActions} disableRipple>
+              <MenuItem
+                disableRipple
+                component={Link}
+                href={`/apps/${appPackage.packageName}/${appPackage.version}/edit`}
+              >
                 <Edit />
                 Edit
               </MenuItem>

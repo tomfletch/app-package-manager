@@ -34,7 +34,7 @@ export default function AppPackageRow({ appPackage, onDelete }: AppPackageRowPro
 
   const onDeleteClick = async () => {
     setAnchorEl(null);
-    fetch(`/api/app-package/${appPackage._id}`, { method: 'DELETE' });
+    fetch(`/api/app-packages/${appPackage._id}`, { method: 'DELETE' });
     onDelete();
   }
 
@@ -82,7 +82,11 @@ export default function AppPackageRow({ appPackage, onDelete }: AppPackageRowPro
             <Visibility />
             View
           </MenuItem>
-          <MenuItem onClick={onCloseActions} disableRipple disabled={!isLoggedIn}>
+          <MenuItem
+            disableRipple
+            component={Link}
+            href={`/apps/${appPackage.packageName}/${appPackage.version}/edit`}
+          >
             <Edit />
             Edit
           </MenuItem>
