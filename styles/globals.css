@@ -8,7 +8,7 @@
   --clr-error: hsl(354, 70%, 54%);
 
   --fw-regular: 400;
-  --fw-bold: 700;
+  --fw-bold: 500;
 
   --br-regular: 0.5rem;
 }
@@ -24,7 +24,7 @@ body {
 }
 
 .container header {
-  padding-block: 1rem;
+  padding-block: 2rem;
 }
 
 p {

@@ -122,20 +122,15 @@ export default function AppPackageVersion({ appPackage, descriptionHTML, related
       </header>
       <div className={styles.content}>
         <main>
-          <ul className={styles.breadcrumbs}>
-            <li><Link href="/">App Packages</Link></li>
-            <li>{appPackage.name}</li>
-            <li>{appPackage.version}</li>
-          </ul>
           <div className={styles.description} dangerouslySetInnerHTML={{ __html: descriptionHTML}} />
           <InternalNotes appPackageId={appPackage._id} notes={appPackage.notes} />
         </main>
         <div className={styles.sidebar}>
-          <section>
+          <section className={styles.apkSection}>
             <AppPackageLogoName appPackage={appPackage} />
             <div className={styles.options}>
-              <button type="button">Download</button>
-              <button type="button">Share</button>
+              <Button type="button" variant="outlined" color="secondary">Download</Button>
+              <Button type="button" variant="outlined" color="secondary">Share</Button>
             </div>
           </section>
           <RelatedAppPackages relatedAppPackages={relatedAppPackages} />
