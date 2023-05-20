@@ -76,3 +76,7 @@ input[aria-invalid="true"], textarea[aria-invalid="true"], select[aria-invalid="
   background-color: #f5f5f5;
   padding: 0.5rem 1rem;
 }
+
+.MuiListItem-root {
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
+}

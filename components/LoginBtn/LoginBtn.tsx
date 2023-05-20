@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Avatar, Button, IconButton, ListItemIcon, Menu, MenuItem, Tooltip } from '@mui/material';
+import { Avatar, Button, IconButton, ListItem, ListItemIcon, Menu, MenuItem, Tooltip } from '@mui/material';
 import { signIn, signOut } from 'next-auth/react';
 import { Logout } from '@mui/icons-material';
 import useUser from '../../hooks/useUser';
@@ -42,7 +42,7 @@ export default function LoginBtn() {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-          <MenuItem disabled>{user.name}</MenuItem>
+          <ListItem>{user.name}</ListItem>
           <MenuItem onClick={() => { signOut(); handleClose(); }}>
             <ListItemIcon>
               <Logout fontSize="small" />
