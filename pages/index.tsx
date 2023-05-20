@@ -6,7 +6,7 @@ import { IAppPackage } from '../models/AppPackage';
 import AppPackageRow from '../components/AppPackageRow/AppPackageRow';
 import { getAllAppPackages } from '../lib/appPackages';
 import useUser from '../hooks/useUser';
-import { InputAdornment, TextField } from '@mui/material';
+import { Button, InputAdornment, TextField } from '@mui/material';
 import { Search } from '@mui/icons-material';
 
 function isSearchMatch(appPackage: IAppPackage, searchTerm: string) {
@@ -55,7 +55,9 @@ export default function Home({ initialAppPackages }: HomeProps) {
             />
           </div>
           {isLoggedIn && (
-            <Link href="/apps/add">Add Package</Link>
+            <Button type="submit" variant="contained" component={Link} href="/apps/add">
+              Add Package
+            </Button>
           )}
         </div>
       </header>

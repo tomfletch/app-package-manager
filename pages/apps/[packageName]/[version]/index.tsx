@@ -84,8 +84,8 @@ export default function AppPackageVersion({ appPackage, descriptionHTML, related
         { isLoggedIn && (
           <div>
             <Button
-              id="demo-customized-button"
-              aria-controls={isActionsOpen ? 'demo-customized-menu' : undefined}
+              id="actions-btn"
+              aria-controls={isActionsOpen ? 'actions-menu' : undefined}
               aria-haspopup="true"
               aria-expanded={isActionsOpen ? 'true' : undefined}
               variant="contained"
@@ -96,9 +96,9 @@ export default function AppPackageVersion({ appPackage, descriptionHTML, related
               Actions
             </Button>
             <Menu
-              id="demo-customized-menu"
+              id="actions-menu"
               MenuListProps={{
-                'aria-labelledby': 'demo-customized-button',
+                'aria-labelledby': 'actions-btn',
               }}
               anchorEl={anchorEl}
               open={isActionsOpen}

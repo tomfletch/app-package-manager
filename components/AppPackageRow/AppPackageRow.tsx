@@ -58,11 +58,11 @@ export default function AppPackageRow({ appPackage, onDelete }: AppPackageRowPro
       </td>
       <td>
         <Button
-          id="demo-customized-button"
-          aria-controls={isActionsOpen ? 'demo-customized-menu' : undefined}
+          id={`actions-btn-${appPackage._id}`}
+          aria-controls={isActionsOpen ? `actions-menu-${appPackage._id}` : undefined}
           aria-haspopup="true"
           aria-expanded={isActionsOpen ? 'true' : undefined}
-          variant="contained"
+          variant="outlined"
           disableElevation
           onClick={onActionsClick}
           endIcon={<KeyboardArrowDown />}
@@ -70,9 +70,9 @@ export default function AppPackageRow({ appPackage, onDelete }: AppPackageRowPro
           Actions
         </Button>
         <Menu
-          id="demo-customized-menu"
+          id={`actions-menu-${appPackage._id}`}
           MenuListProps={{
-            'aria-labelledby': 'demo-customized-button',
+            'aria-labelledby': `actions-btn-${appPackage._id}`,
           }}
           anchorEl={anchorEl}
           open={isActionsOpen}
@@ -86,6 +86,7 @@ export default function AppPackageRow({ appPackage, onDelete }: AppPackageRowPro
             disableRipple
             component={Link}
             href={`/apps/${appPackage.packageName}/${appPackage.version}/edit`}
+            disabled={!isLoggedIn}
           >
             <Edit />
             Edit
