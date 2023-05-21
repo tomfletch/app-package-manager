@@ -23,7 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       // TODO: Check user is authorised to edit the note
       const note = await editNote(appPackageId as string, noteId as string, body);
-      res.status(204).json(note);
+      res.status(200).json(note);
     } catch (error) {
       res.status(400).json({ success: false });
     }

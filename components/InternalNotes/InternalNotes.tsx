@@ -20,8 +20,8 @@ export default function InternalNotes({ appPackageId, notes: initialNotes }: Int
     setNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId))
   };
 
-  const handleEditNote = (noteId: string, body: string) => {
-    setNotes((prevNotes) => prevNotes.map((n) => n._id === noteId ? {...n, body } : n));
+  const handleEditNote = (newNote: INote) => {
+    setNotes((prevNotes) => prevNotes.map((n) => n._id === newNote._id ? {...newNote } : n));
   };
 
   return (
@@ -36,7 +36,7 @@ export default function InternalNotes({ appPackageId, notes: initialNotes }: Int
               appPackageId={appPackageId}
               note={note}
               onDelete={() => handleDeleteNote(note._id)}
-              onEdit={(newBody) => handleEditNote(note._id, newBody)}
+              onEdit={handleEditNote}
             />
           ))}
         </ul>

@@ -17,11 +17,13 @@ export async function deleteNote(appPackageId: string, noteId: string): Promise<
   });
 }
 
-export async function editNote(appPackageId: string, noteId: string, newBody: string): Promise<void> {
+export async function editNote(appPackageId: string, noteId: string, newBody: string): Promise<INote> {
   await dbConnect();
-  await AppPackage.updateOne({_id: appPackageId, 'notes._id': noteId}, {
+  const result = await AppPackage.findOneAndUpdate({_id: appPackageId, 'notes._id': noteId}, {
     '$set': {
       'notes.$.body': newBody
     }
-  });
+  }, { new: true });
+  const newNote = result.notes.find((note) => note._id == noteId);
+  return serializable(newNote);
 }

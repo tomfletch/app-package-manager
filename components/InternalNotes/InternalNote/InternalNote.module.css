@@ -8,11 +8,16 @@
   flex-grow: 1;
 }
 
-.noteMeta {
+.noteHeader {
   display: flex;
   gap: 1rem;
   justify-content: space-between;
   align-items: center;
+}
+
+.noteMeta {
+  display: flex;
+  gap: 0.5rem;
 }
 
 .avatar {
@@ -21,10 +26,14 @@
 
 .name {
   font-weight: var(--fw-bold);
-  margin-right: 1rem;
 }
 
 .age {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.edited {
   font-size: 0.9rem;
   color: #666;
 }

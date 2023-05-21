@@ -10,7 +10,7 @@ type InternalNoteProps = {
   appPackageId: string;
   note: INote;
   onDelete: () => void;
-  onEdit: (newNoteBody: string) => void;
+  onEdit: (newNote: INote) => void;
 };
 
 export default function InternalNote({ appPackageId, note, onDelete, onEdit }: InternalNoteProps) {
@@ -22,12 +22,15 @@ export default function InternalNote({ appPackageId, note, onDelete, onEdit }: I
   const [newNoteBody, setNewNoteBody] = useState(note.body);
 
   const handleSaveEdit = async() => {
-    await fetch(`/api/app-packages/${appPackageId}/notes/${note._id}`, {
+    const response = await fetch(`/api/app-packages/${appPackageId}/notes/${note._id}`, {
       method: 'PATCH',
       body: JSON.stringify({ body: newNoteBody }),
       headers: { 'Content-Type': 'application/json' }
     });
-    onEdit(newNoteBody);
+    const newNote = await response.json();
+    onEdit(newNote);
+    setNewNoteBody(newNote.body);
+    setIsEditing(false);
   }
 
   const handleDelete = async () => {
@@ -44,10 +47,13 @@ export default function InternalNote({ appPackageId, note, onDelete, onEdit }: I
     <li className={styles.note}>
       <img className={styles.avatar} src={note.avatarUrl} width={50} height={50} />
       <div>
-        <div className={styles.noteMeta}>
-          <div>
+        <div className={styles.noteHeader}>
+          <div className={styles.noteMeta}>
             <span className={styles.name}>{note.name}</span>
             <span className={styles.age}>{dateToAgo(new Date(note.createdAt))}</span>
+            {(note.createdAt !== note.updatedAt) && (
+              <span className={styles.edited}>(Edited)</span>
+            )}
           </div>
           {isCurrentUser && (
             <div>

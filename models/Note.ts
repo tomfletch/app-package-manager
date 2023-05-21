@@ -7,6 +7,7 @@ export interface INote {
   body: string;
   avatarUrl: string;
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface INewNote {
