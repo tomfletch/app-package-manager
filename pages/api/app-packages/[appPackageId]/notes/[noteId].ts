@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { createNote, deleteNote } from '../../../../../lib/notes';
+import { createNote, deleteNote, editNote } from '../../../../../lib/notes';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../../../auth/[...nextauth]';
 
@@ -15,6 +15,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       // TODO: Check user is authorised to remove the note
       const note = await deleteNote(appPackageId as string, noteId as string);
+      res.status(204).json(note);
+    } catch (error) {
+      res.status(400).json({ success: false });
+    }
+  } else if (requestMethod === 'PATCH') {
+    try {
+      // TODO: Check user is authorised to edit the note
+      const note = await editNote(appPackageId as string, noteId as string, body);
       res.status(204).json(note);
     } catch (error) {
       res.status(400).json({ success: false });

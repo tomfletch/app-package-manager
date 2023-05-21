@@ -16,3 +16,12 @@ export async function deleteNote(appPackageId: string, noteId: string): Promise<
     $pull: { notes: { _id: noteId }}
   });
 }
+
+export async function editNote(appPackageId: string, noteId: string, newBody: string): Promise<void> {
+  await dbConnect();
+  await AppPackage.updateOne({_id: appPackageId, 'notes._id': noteId}, {
+    '$set': {
+      'notes.$.body': newBody
+    }
+  });
+}

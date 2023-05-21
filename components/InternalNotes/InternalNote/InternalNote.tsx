@@ -10,9 +10,10 @@ type InternalNoteProps = {
   appPackageId: string;
   note: INote;
   onDelete: () => void;
+  onEdit: (newNoteBody: string) => void;
 };
 
-export default function InternalNote({ appPackageId, note, onDelete }: InternalNoteProps) {
+export default function InternalNote({ appPackageId, note, onDelete, onEdit }: InternalNoteProps) {
   const { user } = useUser();
 
   const isCurrentUser = user && user.email === note.email;
@@ -20,8 +21,13 @@ export default function InternalNote({ appPackageId, note, onDelete }: InternalN
   const [isEditing, setIsEditing] = useState(false);
   const [newNoteBody, setNewNoteBody] = useState(note.body);
 
-  const handleSaveEdit = () => {
-    console.log('Editing note');
+  const handleSaveEdit = async() => {
+    await fetch(`/api/app-packages/${appPackageId}/notes/${note._id}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ body: newNoteBody }),
+      headers: { 'Content-Type': 'application/json' }
+    });
+    onEdit(newNoteBody);
   }
 
   const handleDelete = async () => {

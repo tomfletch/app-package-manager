@@ -56,6 +56,7 @@ export default function AddNote({ appPackageId, onAddNote }: AddNoteProps) {
             variant="contained"
             onClick={handleAddNote}
             disabled={isAdding}
+            disableElevation
           >
             Add Note
           </Button>
