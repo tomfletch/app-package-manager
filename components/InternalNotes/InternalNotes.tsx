@@ -16,6 +16,10 @@ export default function InternalNotes({ appPackageId, notes: initialNotes }: Int
     setNotes((prevNotes) => [note, ...prevNotes]);
   };
 
+  const handleDeleteNote = (noteId: string) => {
+    setNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId))
+  }
+
   return (
     <section>
       <h2>Internal Notes</h2>
@@ -23,7 +27,12 @@ export default function InternalNotes({ appPackageId, notes: initialNotes }: Int
       {notes.length !== 0 && (
         <ul className={styles.notesList}>
           {notes.map((note) => (
-            <InternalNote key={note._id} note={note} />
+            <InternalNote
+              key={note._id}
+              appPackageId={appPackageId}
+              note={note}
+              onDelete={() => handleDeleteNote(note._id)}
+            />
           ))}
         </ul>
       )}

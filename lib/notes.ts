@@ -9,3 +9,10 @@ export async function createNote(appPackageId: string, newNote: INewNote): Promi
   await AppPackage.findByIdAndUpdate(appPackageId, { $push: { notes: newNoteObj } });
   return serializable(newNoteObj);
 }
+
+export async function deleteNote(appPackageId: string, noteId: string): Promise<void> {
+  await dbConnect();
+  await AppPackage.findByIdAndUpdate(appPackageId, {
+    $pull: { notes: { _id: noteId }}
+  });
+}
