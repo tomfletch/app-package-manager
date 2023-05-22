@@ -7,11 +7,10 @@ import RelatedAppPackages from '../../../../components/RelatedAppPackages/Relate
 import { IAppPackage } from '../../../../models/AppPackage';
 import { getAppPackage, getRelatedAppPackages } from '../../../../lib/appPackages';
 import { markdownToHTML } from '../../../../lib/markdown';
-import { Button, Menu, MenuItem, Select, SelectChangeEvent } from '@mui/material';
+import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, Menu, MenuItem, Select, SelectChangeEvent, TextField } from '@mui/material';
 import { useState } from 'react';
-import { KeyboardArrowDown, Edit, Delete } from '@mui/icons-material';
+import { KeyboardArrowDown, Edit, Delete, Download, Share } from '@mui/icons-material';
 import { useRouter } from 'next/router';
-import { INote } from '../../../../models/Note';
 import useUser from '../../../../hooks/useUser';
 import styles from '../../../../styles/AppPackageVersion.module.css';
 
@@ -20,13 +19,15 @@ type AppPackageVersionProps = {
   appPackage: IAppPackage;
   descriptionHTML: string;
   relatedAppPackages: IAppPackage[];
+  baseURL: string;
 };
 
-export default function AppPackageVersion({ appPackage, descriptionHTML, relatedAppPackages }: AppPackageVersionProps) {
+export default function AppPackageVersion({ appPackage, descriptionHTML, relatedAppPackages, baseURL }: AppPackageVersionProps) {
   const router = useRouter();
   const { isLoggedIn } = useUser();
 
   const [status, setStatus] = useState(appPackage.status);
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isActionsOpen = Boolean(anchorEl);
@@ -129,8 +130,39 @@ export default function AppPackageVersion({ appPackage, descriptionHTML, related
           <section className={styles.apkSection}>
             <AppPackageLogoName appPackage={appPackage} />
             <div className={styles.options}>
-              <Button type="button" variant="outlined" color="secondary">Download</Button>
-              <Button type="button" variant="outlined" color="secondary">Share</Button>
+              <Button
+                variant="outlined"
+                color="secondary"
+                startIcon={<Download />}
+                href={`/api/app-packages/${appPackage._id}/file`}
+              >
+                Download
+              </Button>
+              <Button
+                variant="outlined"
+                color="secondary"
+                startIcon={<Share />}
+                onClick={() => setIsShareModalOpen(true)}
+              >
+                Share
+              </Button>
+              <Dialog
+                open={isShareModalOpen}
+                onClose={() => setIsShareModalOpen(false)}
+              >
+                <DialogTitle>Share this App Package</DialogTitle>
+                <DialogContent>
+                  <DialogContentText>Use the following link to share this App Package APK file</DialogContentText>
+                  <TextField
+                    value={`${baseURL}/api/app-packages/${appPackage._id}/file`}
+                    InputProps={{ readOnly: true }}
+                    className={styles.shareLinkInput}
+                    onClick={(e) => (e.target as HTMLInputElement).select()}
+                    variant="outlined"
+                    size="small"
+                  />
+                </DialogContent>
+              </Dialog>
             </div>
           </section>
           <RelatedAppPackages relatedAppPackages={relatedAppPackages} />
@@ -154,6 +186,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       appPackage,
       descriptionHTML,
       relatedAppPackages,
+      baseURL: process.env.BASE_URL,
     }
   }
 };

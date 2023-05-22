@@ -17,8 +17,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
   } else if (method === 'PATCH') {
     try {
-      await updateAppPackage(appPackageId as string, body);
-      res.status(204).end();
+      const appPackage = await updateAppPackage(appPackageId as string, body);
+      res.status(200).json(appPackage);
     } catch (error) {
       res.status(500).json({ success: false });
     }

@@ -1,8 +1,10 @@
+import { ChangeEvent, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { IAppPackage, INewAppPackage } from '../../models/AppPackage';
 import styles from './AddEditAppPackageForm.module.css';
 import { Button, MenuItem, Select, TextField } from '@mui/material';
+import { FilePresent } from '@mui/icons-material';
 
 type AddEditAppPackageFormProps = {
   appPackage?: IAppPackage;
@@ -18,6 +20,8 @@ const DEFAULT_VALUES = {
 
 export default function AddEditAppPackageForm({ appPackage }: AddEditAppPackageFormProps) {
   const router = useRouter();
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   let defaultValues = DEFAULT_VALUES;
 
@@ -37,7 +41,15 @@ export default function AddEditAppPackageForm({ appPackage }: AddEditAppPackageF
 
   const status = watch('status');
 
+  const handleFileUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) return;
+    const file = event.target.files[0];
+    setSelectedFile(file);
+  };
+
   const onSubmit = async (newAppPackage: INewAppPackage) => {
+    setIsSubmitting(true);
+
     let method = 'POST';
     let url = '/api/app-packages';
 
@@ -46,7 +58,8 @@ export default function AddEditAppPackageForm({ appPackage }: AddEditAppPackageF
       url = `/api/app-packages/${appPackage._id}`;
     }
 
-    await fetch(url, {
+    // Create/update the app package
+    const response = await fetch(url, {
       method,
       headers: {
         Accept: 'application/json',
@@ -54,8 +67,19 @@ export default function AddEditAppPackageForm({ appPackage }: AddEditAppPackageF
       },
       body: JSON.stringify(newAppPackage)
     });
+    const updatedAppPackage = await response.json();
+
+    // If there is a selected file, upload it
+    if (selectedFile) {
+      await fetch(`/api/app-packages/${updatedAppPackage._id}/file`, {
+        method: 'PUT',
+        body: selectedFile
+      });
+    }
+
+    // Redirect to app package page
     router.push(`/apps/${newAppPackage.packageName}/${newAppPackage.version}`);
-  }
+  };
 
 
   return (
@@ -68,6 +92,7 @@ export default function AddEditAppPackageForm({ appPackage }: AddEditAppPackageF
           error={!!errors.name}
           helperText={errors.name?.message}
           InputLabelProps={{shrink: true}}
+          disabled={isSubmitting}
           {...register('name', { required: 'Required'})}
         />
       </div>
@@ -80,6 +105,7 @@ export default function AddEditAppPackageForm({ appPackage }: AddEditAppPackageF
           error={!!errors.packageName}
           helperText={errors.packageName?.message}
           InputLabelProps={{shrink: true}}
+          disabled={isSubmitting}
           {...register('packageName', { required: 'Required'})}
         />
       </div>
@@ -92,6 +118,7 @@ export default function AddEditAppPackageForm({ appPackage }: AddEditAppPackageF
           error={!!errors.version}
           helperText={errors.version?.message}
           InputLabelProps={{shrink: true}}
+          disabled={isSubmitting}
           {...register('version', { required: 'Required'})}
         />
       </div>
@@ -105,6 +132,7 @@ export default function AddEditAppPackageForm({ appPackage }: AddEditAppPackageF
           error={!!errors.description}
           helperText={errors.description?.message}
           InputLabelProps={{shrink: true}}
+          disabled={isSubmitting}
           {...register('description', { required: 'Required'})}
         />
       </div>
@@ -114,12 +142,31 @@ export default function AddEditAppPackageForm({ appPackage }: AddEditAppPackageF
           value={status}
           className={`select-status-${status.toLowerCase()}`}
           size="small"
+          disabled={isSubmitting}
           {...register('status', { required: 'Required'})}
         >
           <MenuItem value="Draft">Draft</MenuItem>
           <MenuItem value="Submitted">Submitted</MenuItem>
           <MenuItem value="Released">Released</MenuItem>
         </Select>
+      </div>
+
+      <div className={styles.field}>
+        <Button
+          variant="outlined"
+          component="label"
+          endIcon={<FilePresent />}
+        >
+          Select APK File
+          <input
+            hidden
+            type="file"
+            onChange={handleFileUpload}
+          />
+        </Button>
+        {selectedFile && (
+          <span className={styles.filename}>Selected File: {selectedFile.name}</span>
+        )}
       </div>
 
       <div className={styles.field}>

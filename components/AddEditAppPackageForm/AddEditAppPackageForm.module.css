@@ -5,3 +5,7 @@
 .field input, .field textarea {
   width: 500px;
 }
+
+.filename {
+  margin-left: 1rem;
+}
