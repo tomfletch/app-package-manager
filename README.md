@@ -1,27 +1,17 @@
-# Next.js + Playwright
+# App Package Manager
 
-This example shows how to configure Playwright to work with Next.js.
+This example web app is built using Next.js using Material UI and developed in TypeScript.
 
-## Deploy your own
+It uses a MongoDB Atlas Database, via Mongoose.
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example) or preview live with [StackBlitz](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-playwright)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-playwright&project-name=with-playwright&repository-name=with-playwright)
+## Features
 
-## How to use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-playwright with-playwright-app
-```
-
-```bash
-yarn create next-app --example with-playwright with-playwright-app
-```
-
-```bash
-pnpm create next-app --example with-playwright with-playwright-app
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+- Sign in using Google email and password
+- Create, update and delete app packages
+- Attach an APK file to an app package
+- Share a link to an APK file
+- Change the status of an app package
+- Add notes to an app package
+- Edit and delete notes that you have written
+- Search the app package index page
