@@ -165,7 +165,7 @@ export default function AppPackageVersion({ appPackage, descriptionHTML, related
               </Dialog>
             </div>
           </section>
-          <RelatedAppPackages relatedAppPackages={relatedAppPackages} />
+          <RelatedAppPackages thisAppPackage={appPackage} relatedAppPackages={relatedAppPackages} />
         </div>
       </div>
 

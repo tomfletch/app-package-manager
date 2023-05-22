@@ -3,10 +3,11 @@ import { IAppPackage } from '../../models/AppPackage';
 import styles from './RelatedAppPackages.module.css';
 
 type RelatedAppPackagesProps = {
+  thisAppPackage: IAppPackage;
   relatedAppPackages: IAppPackage[];
 }
 
-export default function RelatedAppPackages({ relatedAppPackages }: RelatedAppPackagesProps) {
+export default function RelatedAppPackages({ thisAppPackage, relatedAppPackages }: RelatedAppPackagesProps) {
   return (
     <section>
       <h2>Related App Packages</h2>
@@ -16,13 +17,15 @@ export default function RelatedAppPackages({ relatedAppPackages }: RelatedAppPac
             <li key={`${appPackage.packageName}-${appPackage.version}`}>
               <Link
                 href={`/apps/${appPackage.packageName}/${appPackage.version}`}
-                className={styles.packageName}
+                className={`${styles.appPackageLink} ${appPackage._id === thisAppPackage._id ? styles.current : ''}`}
               >
-                {appPackage.version}
+                <div className={styles.version}>
+                  {appPackage.version}
+                </div>
+                <div className={`status status-label status-${appPackage.status.toLowerCase()}`}>
+                  {appPackage.status}
+                </div>
               </Link>
-              <div className={`status status-label status-${appPackage.status.toLowerCase()}`}>
-                {appPackage.status}
-              </div>
             </li>
           ))}
         </ul>
