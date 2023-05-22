@@ -1,5 +1,5 @@
 import { KeyboardArrowDown, Edit, Delete, Visibility } from '@mui/icons-material';
-import { Button, Menu, MenuItem } from '@mui/material';
+import { Button, ListItemIcon, ListItemText, Menu, MenuItem } from '@mui/material';
 import Link from 'next/link';
 import { IAppPackage } from '../../models/AppPackage';
 import AppPackageLogoName from '../AppPackageLogoName/AppPackageLogoName';
@@ -80,8 +80,10 @@ export default function AppPackageRow({ appPackage, onDelete }: AppPackageRowPro
           onClose={onCloseActions}
         >
           <MenuItem onClick={onViewClick} disableRipple>
-            <Visibility />
-            View
+            <ListItemIcon>
+              <Visibility fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>View</ListItemText>
           </MenuItem>
           <MenuItem
             disableRipple
@@ -89,12 +91,16 @@ export default function AppPackageRow({ appPackage, onDelete }: AppPackageRowPro
             href={`/apps/${appPackage.packageName}/${appPackage.version}/edit`}
             disabled={!isLoggedIn}
           >
-            <Edit />
-            Edit
+            <ListItemIcon>
+              <Edit fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Edit</ListItemText>
           </MenuItem>
           <MenuItem onClick={onDeleteClick} disableRipple disabled={!isLoggedIn}>
-            <Delete />
-            Delete
+            <ListItemIcon>
+              <Delete fontSize="small" />
+            </ListItemIcon>
+            <ListItemText>Delete</ListItemText>
           </MenuItem>
         </Menu>
       </td>
