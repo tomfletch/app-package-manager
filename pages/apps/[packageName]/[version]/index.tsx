@@ -60,7 +60,7 @@ export default function AppPackageVersion({ appPackage, descriptionHTML, related
 
   return (
     <div className="container">
-      <header className={styles.header}>
+      <header id="app-package-header" className={styles.header}>
         <AppPackageLogoName appPackage={appPackage} />
         <div>
           {isLoggedIn ? (

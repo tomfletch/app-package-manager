@@ -1,5 +1,8 @@
 import { PlaywrightTestConfig, devices } from '@playwright/test'
 import path from 'path'
+import dotenv from 'dotenv'
+
+dotenv.config({ path: path.resolve(__dirname, 'playwright', '.env')})
 
 // Use process.env.PORT by default and fallback to port 3000
 const PORT = process.env.PORT || 3000
@@ -43,34 +46,21 @@ const config: PlaywrightTestConfig = {
   },
 
   projects: [
+    // Setup project
     {
-      name: 'Desktop Chrome',
+      name: 'setup',
       use: {
-        ...devices['Desktop Chrome'],
+        ...devices['Desktop Firefox']
       },
-    },
-    // {
-    //   name: 'Desktop Firefox',
-    //   use: {
-    //     ...devices['Desktop Firefox'],
-    //   },
-    // },
-    // {
-    //   name: 'Desktop Safari',
-    //   use: {
-    //     ...devices['Desktop Safari'],
-    //   },
-    // },
-    // Test against mobile viewports.
-    {
-      name: 'Mobile Chrome',
-      use: {
-        ...devices['Pixel 5'],
-      },
+      testMatch: /.*\.setup\.ts/
     },
     {
-      name: 'Mobile Safari',
-      use: devices['iPhone 12'],
+      name: 'Desktop Firefox',
+      use: {
+        ...devices['Desktop Firefox'],
+        storageState: 'playwright/.auth/user.json'
+      },
+      dependencies: ['setup']
     },
   ],
 }

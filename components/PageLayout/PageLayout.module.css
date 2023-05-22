@@ -9,16 +9,13 @@
   justify-content: space-between;
 }
 
-.header h1 {
+.title {
   font-weight: 300;
   font-size: 1.5rem;
-}
-
-.header h1 a {
   color: var(--clr-text);
   text-decoration: none;
 }
 
-.header h1 a:hover {
+.title:hover {
   color: var(--clr-primary);
 }

@@ -8,10 +8,6 @@
   flex-grow: 1;
 }
 
-.avatar {
-  border-radius: 50%;
-}
-
 .newNoteBody {
   margin-bottom: 0.5rem;
 }

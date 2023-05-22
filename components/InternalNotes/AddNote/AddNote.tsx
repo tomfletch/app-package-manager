@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, TextField } from '@mui/material';
+import { Avatar, Button, TextField } from '@mui/material';
 import styles from './AddNote.module.css';
 import useUser from '../../../hooks/useUser';
 import { INote } from '../../../models/Note';
@@ -39,14 +39,19 @@ export default function AddNote({ appPackageId, onAddNote }: AddNoteProps) {
 
   return (
     <div className={styles.newNote}>
-      <img className={styles.avatar} src={user.image} width="50" height="50" />
+      <Avatar
+        alt={user.name}
+        sx={{ width: 50, height: 50 }}
+        src={user.image}
+      />
       <div>
         <TextField
+          id="new-note-input"
           className={styles.newNoteBody}
           multiline
           fullWidth
           minRows={2}
-          placeholder="Add a comment..."
+          placeholder="Add a note..."
           value={newNoteBody}
           onChange={(event) => setNewNoteBody(event.target.value)}
           disabled={isAdding}

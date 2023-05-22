@@ -29,7 +29,7 @@ export default function InternalNotes({ appPackageId, notes: initialNotes }: Int
       <h2>Internal Notes</h2>
       <AddNote appPackageId={appPackageId} onAddNote={onAddNote}/>
       {notes.length !== 0 && (
-        <ul className={styles.notesList}>
+        <ul id="notes-list" className={styles.notesList}>
           {notes.map((note) => (
             <InternalNote
               key={note._id}

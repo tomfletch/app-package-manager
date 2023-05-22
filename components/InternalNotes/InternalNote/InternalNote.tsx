@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, IconButton, TextField } from '@mui/material';
+import { Avatar, Button, IconButton, TextField } from '@mui/material';
 import { Cancel, Delete, Edit, Save } from '@mui/icons-material';
 import { dateToAgo } from '../../../lib/util';
 import { INote } from '../../../models/Note';
@@ -45,7 +45,11 @@ export default function InternalNote({ appPackageId, note, onDelete, onEdit }: I
 
   return (
     <li className={styles.note}>
-      <img className={styles.avatar} src={note.avatarUrl} width={50} height={50} />
+      <Avatar
+        alt={note.name}
+        sx={{ width: 50, height: 50 }}
+        src={note.avatarUrl}
+      />
       <div>
         <div className={styles.noteHeader}>
           <div className={styles.noteMeta}>

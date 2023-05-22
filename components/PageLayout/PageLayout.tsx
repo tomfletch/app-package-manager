@@ -12,7 +12,7 @@ export default function PageLayout({ children }: PageLayoutProps) {
     <>
       <div className={styles.headerContainer}>
         <header className={`container ${styles.header}`}>
-          <h1><Link href="/">App Package Manager</Link></h1>
+          <Link className={styles.title} href="/">App Package Manager</Link>
           <LoginBtn />
         </header>
       </div>

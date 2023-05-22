@@ -45,6 +45,7 @@ export default function Home({ initialAppPackages }: HomeProps) {
         <div className={styles.headerOptions}>
           <div className={styles.searchContainer}>
             <TextField
+              id="search-input"
               InputProps={{
                 startAdornment: <InputAdornment position="start"><Search /></InputAdornment>,
               }}
